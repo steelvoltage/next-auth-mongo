@@ -12,13 +12,15 @@ const user = {
 
 const login = async (req, res) => {
   if (req.method !== 'POST') {
-    return send(res, 406, { error: 'Endpoint only accepts POST requests.' })
+    return send(res, 406, { message: 'Endpoint only accepts POST requests.' })
   }
   const { email, password } = req.body
-  const validate = email === user.email || password === user.password
+  const validate = email === user.email && password === user.password
 
   if (!validate) {
-    return send(res, 401, { error: 'Invalid login credentials' })
+    return send(res, 401, {
+      message: 'Invalid login credentials. Please try again.'
+    })
   }
 
   const token = jwt.sign(

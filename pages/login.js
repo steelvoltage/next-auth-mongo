@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
 import fetch from 'isomorphic-unfetch'
-
-import { authLogin } from '../lib/utils/auth'
-
-import Layout from '../components/layout/Layout'
+import withAuth from '../components/withAuth'
+import { authLogin } from '../lib/utils/authHelpers'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -37,7 +35,7 @@ const Login = () => {
   }
 
   return (
-    <Layout>
+    <>
       <Head>
         <title>Login</title>
       </Head>
@@ -84,8 +82,8 @@ const Login = () => {
           </div>
         </div>
       </form>
-    </Layout>
+    </>
   )
 }
 
-export default Login
+export default withAuth(Login)

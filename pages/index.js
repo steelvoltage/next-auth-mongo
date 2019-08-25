@@ -1,14 +1,17 @@
 import React from 'react'
 import Head from 'next/head'
-import Layout from '../components/layout/Layout'
+import withAuth from '../components/withAuth'
 
-const Home = () => (
-  <Layout>
-    <Head>
-      <title>Home</title>
-    </Head>
-    <h1 className="title">Home</h1>
-  </Layout>
-)
+const Home = ({ user }) => {
+  return (
+    <>
+      <Head>
+        <title>Home</title>
+      </Head>
+      <h1 className="title">Home</h1>
+      <p>{user ? `Welcome ${user.displayName}!` : 'Welcome!'}</p>
+    </>
+  )
+}
 
-export default Home
+export default withAuth(Home)

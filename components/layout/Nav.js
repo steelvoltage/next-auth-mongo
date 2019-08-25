@@ -1,7 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
+import { authLogout } from '../../lib/utils/authHelpers'
 
-const Nav = () => {
+const Nav = ({ user }) => {
   return (
     <nav className="navbar is-light">
       <div className="container">
@@ -13,18 +14,32 @@ const Nav = () => {
               </Link>
             </div>
           </div>
-          <div className="navbar-end">
-            <div className="navbar-item">
-              <Link href="/login">
-                <a>Login</a>
-              </Link>
+          {user ? (
+            <div className="navbar-end">
+              {' '}
+              <div className="navbar-item">
+                <Link href="/account">
+                  <a>Account</a>
+                </Link>
+              </div>
+              <div className="navbar-item">
+                <a onClick={authLogout}>Logout</a>
+              </div>
             </div>
-            <div className="navbar-item">
-              <Link href="/register">
-                <a>Register</a>
-              </Link>
+          ) : (
+            <div className="navbar-end">
+              <div className="navbar-item">
+                <Link href="/login">
+                  <a>Login</a>
+                </Link>
+              </div>
+              <div className="navbar-item">
+                <Link href="/register">
+                  <a>Register</a>
+                </Link>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </nav>

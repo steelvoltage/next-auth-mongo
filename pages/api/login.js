@@ -1,7 +1,7 @@
-import { send, createError, run } from 'micro'
+import { send, run } from 'micro'
 import jwt from 'jsonwebtoken'
 
-const secret = 'SUPER_SECRET_PASSWORD'
+const secret = process.env.SECRET_KEY
 
 const user = {
   id: 1,
@@ -12,14 +12,16 @@ const user = {
 
 const login = async (req, res) => {
   if (req.method !== 'POST') {
-    return send(res, 406, { message: 'Endpoint only accepts POST requests.' })
+    return send(res, 406, {
+      messages: ['Endpoint only accepts POST requests.']
+    })
   }
   const { email, password } = req.body
   const validate = email === user.email && password === user.password
 
   if (!validate) {
     return send(res, 401, {
-      message: 'Invalid login credentials. Please try again.'
+      messages: ['Invalid login credentials. Please try again.']
     })
   }
 

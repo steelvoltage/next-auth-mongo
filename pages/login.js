@@ -7,14 +7,13 @@ import { authLogin } from '../lib/utils/authHelpers'
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState(null)
+  const [errors, setErrors] = useState([])
+
   const disabled = email === '' || password === ''
 
   const handleSubmit = async e => {
     e.preventDefault()
-
     const url = 'http://localhost:3000/api/login'
-
     try {
       const loginAttempt = await fetch(url, {
         method: 'POST',
@@ -26,8 +25,8 @@ const Login = () => {
         const { token } = await loginAttempt.json()
         authLogin(token)
       } else {
-        const { message } = await loginAttempt.json()
-        setError(message)
+        const { messages } = await loginAttempt.json()
+        setErrors(messages)
       }
     } catch (err) {
       console.error('Error:', err)
@@ -69,9 +68,13 @@ const Login = () => {
             />
           </div>
         </div>
-        {error ? (
+        {errors.length > 0 ? (
           <div className="message is-danger">
-            <div className="message-body">{error}</div>
+            <div className="message-body">
+              {errors.map(error => {
+                return <p>{error}</p>
+              })}
+            </div>
           </div>
         ) : null}
         <div className="field">
@@ -86,4 +89,4 @@ const Login = () => {
   )
 }
 
-export default withAuth(Login)
+export default withAuth(Login, true)

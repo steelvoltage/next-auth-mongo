@@ -13,7 +13,7 @@ const Login = () => {
 
   const handleSubmit = async e => {
     e.preventDefault()
-    const url = 'http://localhost:3000/api/login'
+    const url = 'http://localhost:3000/api/user/login'
     try {
       const loginAttempt = await fetch(url, {
         method: 'POST',
@@ -25,8 +25,8 @@ const Login = () => {
         const { token } = await loginAttempt.json()
         authLogin(token)
       } else {
-        const { messages } = await loginAttempt.json()
-        setErrors(messages)
+        const { validationErrors } = await loginAttempt.json()
+        setErrors(validationErrors)
       }
     } catch (err) {
       console.error('Error:', err)

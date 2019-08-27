@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Layout from './layout/Layout'
-import { authRouteCheck } from '../lib/utils/authHelpers'
+import { authRouteCheck } from '../lib/authHelpers'
 
 const withAuthRouteCheck = C => {
   return class extends Component {

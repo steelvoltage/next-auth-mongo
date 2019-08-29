@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Layout from './layout/Layout'
 import { authRouteCheck } from '../lib/authHelpers'
 
-const withAuthRouteCheck = C => {
+function withAuthRouteCheck(C) {
   return class extends Component {
     constructor(props) {
       super(props)

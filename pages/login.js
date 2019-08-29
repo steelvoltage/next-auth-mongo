@@ -4,14 +4,14 @@ import fetch from 'isomorphic-unfetch'
 import withAuth from '../components/withAuth'
 import { authLogin } from '../lib/utils/authHelpers'
 
-const Login = () => {
+function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState([])
 
   const disabled = email === '' || password === ''
 
-  const handleSubmit = async e => {
+  async function handleSubmit(e) {
     e.preventDefault()
     const url = 'http://localhost:3000/api/user/login'
     try {

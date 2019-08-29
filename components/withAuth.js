@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Layout from './layout/Layout'
 import { authCheck, authLogoutSync } from '../lib/authHelpers'
 
-const withAuth = C => {
+function withAuth(C) {
   return class extends Component {
     constructor(props) {
       super(props)

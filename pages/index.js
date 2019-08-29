@@ -2,7 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 import withAuth from '../components/withAuth'
 
-const Home = ({ user }) => {
+function Home({ user }) {
   return (
     <>
       <Head>

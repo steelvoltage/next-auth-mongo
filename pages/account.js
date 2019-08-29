@@ -2,9 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 import withAuthRouteCheck from '../components/withAuthRouteCheck'
 
-import Layout from '../components/layout/Layout'
-
-const Account = ({ user }) => {
+function Account({ user }) {
   return (
     <>
       <Head>

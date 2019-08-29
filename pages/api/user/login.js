@@ -12,7 +12,7 @@ const user = {
   displayName: 'george'
 }
 
-const Login = async (req, res) => {
+async function Login(req, res) {
   const errors = []
 
   if (req.method !== 'POST') {

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Head from 'next/head'
 import withAuth from '../components/withAuth'
 
-const Register = () => {
+function Register() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [password2, setPassword2] = useState('')
@@ -13,11 +13,11 @@ const Register = () => {
   const disabled =
     email === '' || password === '' || password2 === '' || displayName === ''
 
-  const handleSubmit = e => {
+  function handleSubmit(e) {
     e.preventDefault()
   }
 
-  const comparePasswords = () => {
+  function comparePasswords() {
     if (password !== password2 && password !== '' && password2 !== '') {
       setPassErr('Passwords must match.')
     } else {

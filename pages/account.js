@@ -9,7 +9,7 @@ function Account({ user }) {
         <title>Account</title>
       </Head>
       <h1 className="title">Account</h1>
-      <p>{user.email}</p>
+      <p>{user.id}</p>
     </>
   )
 }

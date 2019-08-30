@@ -2,21 +2,22 @@ import React, { Component } from 'react'
 import Layout from './layout/Layout'
 import { authCheck, authLogoutSync } from '../lib/authHelpers'
 
-function withAuth(C) {
+function withAuth(C, misdirect) {
   return class extends Component {
     constructor(props) {
       super(props)
+    }
+
+    static async getInitialProps(ctx) {
+      const user = await authCheck(ctx, misdirect)
+      const cProps = C.getInitialProps && (await C.getInitialProps(ctx))
+      return { ...cProps, user }
     }
 
     componentDidMount() {
       window.addEventListener('storage', e => authLogoutSync(e))
     }
 
-    static async getInitialProps(ctx) {
-      const user = authCheck(ctx)
-      const cProps = C.getInitialProps && (await C.getInitialProps(ctx))
-      return { ...cProps, user }
-    }
     render() {
       const { user } = this.props
       return (

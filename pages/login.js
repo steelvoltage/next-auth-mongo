@@ -2,13 +2,12 @@ import React, { useState } from 'react'
 import Head from 'next/head'
 import fetch from 'isomorphic-unfetch'
 import withAuth from '../components/withAuth'
-import { authLogin } from '../lib/utils/authHelpers'
+import { authLogin } from '../lib/authHelpers'
 
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [errors, setErrors] = useState([])
-
+  const [validationErrors, setValidationErrors] = useState([])
   const disabled = email === '' || password === ''
 
   async function handleSubmit(e) {
@@ -25,8 +24,8 @@ function Login() {
         const { token } = await loginAttempt.json()
         authLogin(token)
       } else {
-        const { validationErrors } = await loginAttempt.json()
-        setErrors(validationErrors)
+        const { errors } = await loginAttempt.json()
+        setValidationErrors(errors)
       }
     } catch (err) {
       console.error('Error:', err)
@@ -68,10 +67,10 @@ function Login() {
             />
           </div>
         </div>
-        {errors.length > 0 ? (
+        {validationErrors.length > 0 ? (
           <div className="message is-danger">
             <div className="message-body">
-              {errors.map(error => {
+              {validationErrors.map(error => {
                 return <p>{error}</p>
               })}
             </div>

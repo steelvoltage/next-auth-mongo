@@ -7,12 +7,16 @@ function withAuthRouteCheck(C) {
     constructor(props) {
       super(props)
     }
-
     static async getInitialProps(ctx) {
-      const user = authRouteCheck(ctx)
+      const user = await authRouteCheck(ctx)
       const cProps = C.getInitialProps && (await C.getInitialProps(ctx))
       return { ...cProps, user }
     }
+
+    componentDidMount() {
+      window.addEventListener('storage', e => authLogoutSync(e))
+    }
+
     render() {
       const { user } = this.props
       return (

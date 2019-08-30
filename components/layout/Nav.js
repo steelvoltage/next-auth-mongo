@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { authLogout } from '../../lib/utils/authHelpers'
+import { authLogout } from '../../lib/authHelpers'
 
 const Nav = ({ user }) => {
   return (

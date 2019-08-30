@@ -20,19 +20,22 @@ async function Register(req, res) {
 
   try {
     await connectToDb()
+
     let user = await User.findOne({ email })
     if (user) {
       errors.push('Email account already registered.')
       return send(res, 401, { errors })
     }
+
     user = new User({
       email,
       password,
       displayName
     })
+
     const salt = await bcrypt.genSalt(10)
-    console.log(salt)
     user.password = await bcrypt.hash(password, salt)
+
     await user.save()
     return send(res, 200, user)
   } catch (err) {

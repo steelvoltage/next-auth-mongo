@@ -1,3 +1,4 @@
+// @ts-check
 import React, { useState } from 'react'
 import Head from 'next/head'
 import withAuth from '../components/withAuth'
@@ -7,9 +8,8 @@ function Register() {
   const [password, setPassword] = useState('')
   const [password2, setPassword2] = useState('')
   const [displayName, setDisplayName] = useState('')
-  const [errors, setErrors] = useState([])
-  const [passErr, setPassErr] = useState(null)
-
+  const [validationErrors, setValidationErrors] = useState([])
+  const [passError, setPassError] = useState(null)
   const disabled =
     email === '' || password === '' || password2 === '' || displayName === ''
 
@@ -19,9 +19,9 @@ function Register() {
 
   function comparePasswords() {
     if (password !== password2 && password !== '' && password2 !== '') {
-      setPassErr('Passwords must match.')
+      setPassError('Passwords must match.')
     } else {
-      setPassErr(null)
+      setPassError(null)
     }
   }
 
@@ -93,15 +93,15 @@ function Register() {
             />
           </div>
         </div>
-        {passErr ? (
+        {passError ? (
           <div className="message is-danger">
-            <div className="message-body">{passErr}</div>
+            <div className="message-body">{passError}</div>
           </div>
         ) : null}
-        {errors.length > 0 ? (
+        {validationErrors.length > 0 ? (
           <div className="message is-danger">
             <div className="message-body">
-              {errors.map(error => {
+              {validationErrors.map(error => {
                 return <p>{error}</p>
               })}
             </div>

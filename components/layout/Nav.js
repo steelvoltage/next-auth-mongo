@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { authLogout } from '../../lib/authHelpers'
 
-const Nav = ({ user }) => {
+const Nav = ({ userId }) => {
   return (
     <nav className="navbar is-light">
       <div className="container">
@@ -14,7 +14,7 @@ const Nav = ({ user }) => {
               </Link>
             </div>
           </div>
-          {user ? (
+          {userId ? (
             <div className="navbar-end">
               {' '}
               <div className="navbar-item">

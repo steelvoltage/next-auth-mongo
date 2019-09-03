@@ -3,13 +3,13 @@ import Head from 'next/head'
 
 import Nav from './Nav'
 
-const Layout = ({ children, user }) => {
+const Layout = ({ children, userId }) => {
   return (
     <>
       <Head>
         <link rel="stylesheet" href="../../static/style.css" />
       </Head>
-      <Nav user={user} />
+      <Nav userId={userId} />
       <main className="buffer">
         <div className="container">
           <div className="columns is-centered">

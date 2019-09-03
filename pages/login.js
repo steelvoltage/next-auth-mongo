@@ -4,7 +4,7 @@ import fetch from 'isomorphic-unfetch'
 import withAuth from '../components/withAuth'
 import { authLogin } from '../lib/authHelpers'
 
-function Login() {
+function Login({ issue }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [validationErrors, setValidationErrors] = useState([])
@@ -76,6 +76,18 @@ function Login() {
             </div>
           </div>
         ) : null}
+        {issue ? (
+          <div className="message is-danger">
+            <div className="message-body">
+              {issue === 'rejected' && (
+                <p>
+                  Your login has been rejected. There may be an issue with your
+                  account, or you've been banned.
+                </p>
+              )}
+            </div>
+          </div>
+        ) : null}
         <div className="field">
           <div className="control">
             <button disabled={disabled} type="submit" className="button">
@@ -86,6 +98,11 @@ function Login() {
       </form>
     </>
   )
+}
+
+Login.getInitialProps = ({ query }) => {
+  const { issue } = query
+  return { issue }
 }
 
 export default withAuth(Login, true)

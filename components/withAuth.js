@@ -9,9 +9,10 @@ function withAuth(C, misdirect) {
     }
 
     static async getInitialProps(ctx) {
-      const user = await authCheck(ctx, misdirect)
-      const cProps = C.getInitialProps && (await C.getInitialProps(ctx))
-      return { ...cProps, user }
+      const userId = await authCheck(ctx, misdirect)
+      console.log(userId)
+      const cProps = C.getInitialProps && (await C.getInitialProps(ctx, userId))
+      return { ...cProps, userId }
     }
 
     componentDidMount() {
@@ -19,9 +20,9 @@ function withAuth(C, misdirect) {
     }
 
     render() {
-      const { user } = this.props
+      const { userId } = this.props
       return (
-        <Layout user={user}>
+        <Layout userId={userId}>
           <C {...this.props} />
         </Layout>
       )

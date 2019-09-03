@@ -24,12 +24,20 @@ const UserSchema = new Schema(
     },
     access: {
       type: Number,
+      // -1 represents a banned user. 0 represents a user who hasn't validated email. 1 is a plain user. 2+ are staff/admins
       default: 0,
-      min: -1,
-      max: 2
+      min: -1
     }
   },
   { timestamps: true }
 )
 
-export default mongoose.models.User || mongoose.model('User', UserSchema)
+let User
+
+try {
+  User = mongoose.model('User')
+} catch (err) {
+  User = mongoose.model('User', UserSchema)
+}
+
+export default User

@@ -8,9 +8,9 @@ function withAuthRouteCheck(C) {
       super(props)
     }
     static async getInitialProps(ctx) {
-      const userId = await authRouteCheck(ctx)
-      const cProps = C.getInitialProps && (await C.getInitialProps(ctx, userId))
-      return { ...cProps, userId }
+      const user = await authRouteCheck(ctx)
+      const cProps = C.getInitialProps && (await C.getInitialProps(ctx, user))
+      return { ...cProps, user }
     }
 
     componentDidMount() {
@@ -18,9 +18,9 @@ function withAuthRouteCheck(C) {
     }
 
     render() {
-      const { userId } = this.props
+      const { user } = this.props
       return (
-        <Layout userId={userId}>
+        <Layout user={user}>
           <C {...this.props} />
         </Layout>
       )

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Layout from './layout/Layout'
-import { authCheck, authLogoutSync } from '../lib/authHelpers'
+import { authCheck, authLogoutSync, getUser } from '../lib/authHelpers'
 
 function withAuth(C, misdirect) {
   return class extends Component {
@@ -9,7 +9,8 @@ function withAuth(C, misdirect) {
     }
 
     static async getInitialProps(ctx) {
-      const user = await authCheck(ctx, misdirect)
+      const token = authCheck(ctx, misdirect)
+      const user = await getUser(token)
       const cProps = C.getInitialProps && (await C.getInitialProps(ctx, user))
       return { ...cProps, user }
     }

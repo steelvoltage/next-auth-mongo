@@ -22,11 +22,13 @@ const UserSchema = new Schema(
       minLength: 6,
       trim: true
     },
-    access: {
-      type: Number,
-      // -1 represents a banned user. 0 represents a user who hasn't validated email. 1 is a plain user. 2+ are staff/admins
-      default: 0,
-      min: -1
+    isVerified: {
+      type: Boolean,
+      default: false
+    },
+    isBanned: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }

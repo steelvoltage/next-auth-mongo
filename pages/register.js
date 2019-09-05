@@ -1,6 +1,7 @@
-// @ts-check
 import React, { useState } from 'react'
 import Head from 'next/head'
+import fetch from 'isomorphic-unfetch'
+import Router from 'next/router'
 import withAuth from '../components/withAuth'
 
 function Register() {
@@ -13,8 +14,26 @@ function Register() {
   const disabled =
     email === '' || password === '' || password2 === '' || displayName === ''
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
+    const url = 'http://localhost:3000/api/user/register'
+    try {
+      const registrationAttempt = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, displayName })
+      })
+
+      if (registrationAttempt.ok) {
+        Router.push('/login?register=success')
+      }
+    } catch (err) {
+      setValidationErrors([
+        ...validationErrors,
+        'An unknown error occured, please try again.'
+      ])
+      console.error('Error:', err)
+    }
   }
 
   function comparePasswords() {

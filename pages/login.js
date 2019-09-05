@@ -4,7 +4,7 @@ import fetch from 'isomorphic-unfetch'
 import withAuth from '../components/withAuth'
 import { authLogin } from '../lib/authHelpers'
 
-function Login({ issue }) {
+function Login({ issue, register }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [validationErrors, setValidationErrors] = useState([])
@@ -28,6 +28,10 @@ function Login({ issue }) {
         setValidationErrors(errors)
       }
     } catch (err) {
+      setValidationErrors([
+        ...validationErrors,
+        'An unknown error occured, please try again.'
+      ])
       console.error('Error:', err)
     }
   }
@@ -76,15 +80,21 @@ function Login({ issue }) {
             </div>
           </div>
         ) : null}
-        {issue ? (
+        {issue && issue === 'banned' ? (
           <div className="message is-danger">
             <div className="message-body">
-              {issue === 'rejected' && (
-                <p>
-                  Your login has been rejected. There may be an issue with your
-                  account, or you've been banned.
-                </p>
-              )}
+              <p>Login failure. You have been banned.</p>
+            </div>
+          </div>
+        ) : null}
+        {register && register === 'success' ? (
+          <div className="message is-success">
+            <div className="message-body">
+              <p>
+                Your account was created. A message was sent to your provided
+                email address. Please check it and click the link for
+                verification.
+              </p>
             </div>
           </div>
         ) : null}
@@ -101,8 +111,8 @@ function Login({ issue }) {
 }
 
 Login.getInitialProps = ({ query }) => {
-  const { issue } = query
-  return { issue }
+  const { issue, register } = query
+  return { issue, register }
 }
 
 export default withAuth(Login, true)

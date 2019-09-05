@@ -31,7 +31,8 @@ async function Account(req, res) {
         id: user._id,
         email: user.email,
         displayName: user.displayName,
-        access: user.access
+        isVerified: user.isVerified,
+        isBanned: user.isBanned
       }
     })
   } catch (err) {

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import Layout from './layout/Layout'
-import { authRouteCheck, verifyRedirect, getUser } from '../lib/authHelpers'
+import { authRouteCheck, getUser } from '../lib/authHelpers'
+import Router from 'next/router'
 
-function withAuthRouteCheck(C) {
+function withAuthUnverified(C) {
   return class extends Component {
     constructor(props) {
       super(props)
@@ -10,11 +11,16 @@ function withAuthRouteCheck(C) {
     static async getInitialProps(ctx) {
       const token = authRouteCheck(ctx)
       const user = await getUser(token)
-      if (!user.isVerified) {
-        verifyRedirect(ctx)
+      console.log(user)
+      if (user.isVerified && ctx.req) {
+        ctx.res.writeHead(302, { Location: '/account' })
+        ctx.res.end()
+      } else if (user.isVerified) {
+        Router.push('/account')
+      } else {
+        const cProps = C.getInitialProps && (await C.getInitialProps(ctx, user))
+        return { ...cProps, user }
       }
-      const cProps = C.getInitialProps && (await C.getInitialProps(ctx, user))
-      return { ...cProps, user }
     }
 
     componentDidMount() {
@@ -32,4 +38,4 @@ function withAuthRouteCheck(C) {
   }
 }
 
-export default withAuthRouteCheck
+export default withAuthUnverified
